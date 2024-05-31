@@ -8,6 +8,10 @@ import HeroSlider from '@/components/HeroSlider.vue'
   </div>
 </template>
 
-<style lang="sass" scoped>
-
+<style lang="scss" scoped>
+.HomePage {
+  width: 100%;
+  height: 100%;
+  padding: 0 1rem;
+}
 </style>
