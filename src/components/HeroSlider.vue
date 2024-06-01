@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useFetch } from '../core/fetch'
+import { useFetch } from '../service/fetch'
 import { toggleSlider, updateIndicators } from '../static/js/slider'
 import Product from '../core/Product'
 import { onMounted } from "vue";
