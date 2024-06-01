@@ -1,14 +1,18 @@
 <script setup lang="ts">
-import { useFetch } from '@/service/fetch'
-import { toggleSliderButton, updateIndicators } from '@/static/js/slider'
-import Product from '@/service/Product'
+import { useFetch } from '../core/fetch'
+import { toggleSlider, updateIndicators } from '../static/js/slider'
+import Product from '../core/Product'
 import { onMounted } from "vue";
 
+defineOptions({
+  name: 'HeroSlider',
+})
 const data= await useFetch('https://dummyjson.com/products');
 const products: Product[] = data.products;
+
 onMounted(() => {
   updateIndicators();
-  toggleSliderButton();
+  toggleSlider();
 });
 </script>
 
@@ -16,18 +20,14 @@ onMounted(() => {
   <div class="HeroSlider">
     <div class="HeroSlider__Content">
       <div class="HeroSlider__Item"
+           :style="{'--heroImg': 'url(' + product.thumbnail + ')'}"
            v-for="product in products"
            :key="product.id">
-        <div class="HeroSlider__Info">
-          <h1>{{ product.title }}</h1>
-          <p>{{ product.description }}</p>
-          <div class="HeroSlider__Button">
-            <a href="#" class="HeroSlider__Button-primary">Mehr erfahren</a>
-            <a href="#" class="HeroSlider__Button-secondary">Kontakt</a>
-          </div>
-        </div>
-        <div class="HeroSlider__Image">
-          <img :src="product.thumbnail" :alt="product.brand">
+        <h1>{{ product.title }}</h1>
+        <p>{{ product.description }}</p>
+        <div class="HeroSlider__Button">
+          <a href="#" class="HeroSlider__Button-primary">Mehr erfahren</a>
+          <a href="#" class="HeroSlider__Button-secondary">Kontakt</a>
         </div>
       </div>
     </div>
@@ -48,30 +48,44 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
+$button-primary-color: #009494;
+$button-primary-hover-color: #006565;
+$bg-grey-color: #484848;
+$tablet-width: 600px;
+$desktop-width: 600px;
+
 .HeroSlider {
   position: relative;
   max-width: 100%;
   margin: auto;
   overflow: hidden;
+  height: 550px;
+  background-color: #777777;
+
+  @media (min-width: $tablet-width) {
+    height: 450px;
+  }
+
+  @media (min-width: $desktop-width) {
+    height: 350px;
+  }
 
   &__Content {
     display: flex;
     transition: transform 0.5s ease;
     width: 100%;
+    height: 100%;
   }
 
   &__Item {
     min-width: 100%;
     box-sizing: border-box;
-    background-color: #f5f5f5;
-  }
-
-  &__Info {
-    position: absolute;
-    width: 100%;
-    z-index: 1;
+    background-image: var(--heroImg),
+    linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 1));
+    background-repeat: no-repeat;
+    background-position: center;
     color: white;
-    top: 10%;
+    align-content: end;
     padding: 2rem;
 
     h1 {
@@ -86,7 +100,7 @@ onMounted(() => {
   &__Button {
     display: flex;
     gap: 10px;
-    margin-top: 1rem;
+    margin: 1rem;
 
     &-primary, &-secondary {
       padding: 10px 20px;
@@ -98,10 +112,10 @@ onMounted(() => {
     }
 
     &-primary {
-      background-color: #009494;
+      background-color: $button-primary-color;
 
       &:hover {
-        background-color: #006565;
+        background-color: $button-primary-hover-color;
       }
     }
 
@@ -109,20 +123,8 @@ onMounted(() => {
       border: 1px white solid;
 
       &:hover {
-        background-color: #484848;
+        background-color: $bg-grey-color;
       }
-    }
-  }
-
-  &__Image {
-    position: relative;
-    width: 100%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 1));
-    text-align: center;
-
-    img {
-      height: auto;
-      object-fit: contain;
     }
   }
 
@@ -139,15 +141,15 @@ onMounted(() => {
 
   &__Indicator {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     gap: 2px;
   }
 
   &__Bar {
     display: inline-block;
-    width: 20px;
+    width: 10px;
     height: 5px;
-    background-color: #777777;
+    background-color: $bg-grey-color;
     border-radius: 5px;
     transition: background-color 0.3s ease;
     &.active {
@@ -160,7 +162,7 @@ onMounted(() => {
     z-index: 2;
     display: none;
 
-    @media (min-width: 376px) {
+    @media (min-width: $tablet-width) {
       display: inline-block;
     }
 
@@ -178,18 +180,4 @@ onMounted(() => {
     }
   }
 }
-/*@media (min-width: 768px) {
-  .HeroSlider__Item {
-    flex-direction: row;
-  }
-
-  .HeroSlider__Content {
-    text-align: left;
-    max-width: 50%;
-  }
-
-  .HeroSlider__Image {
-    max-width: 50%;
-  }
-}*/
 </style>
