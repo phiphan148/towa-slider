@@ -1,4 +1,4 @@
-import type { Identifiable } from '@/core/Identifiable'
+import type { Identifiable } from '../core/Identifiable'
 
 export default class Product implements Identifiable {
   public id: number;

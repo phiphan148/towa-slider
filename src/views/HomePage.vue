@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import HeroSlider from '@/components/HeroSlider.vue'
+import HeroSlider from '../components/HeroSlider.vue'
 </script>
 
 <template>

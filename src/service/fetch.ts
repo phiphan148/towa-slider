@@ -2,7 +2,6 @@ import { ref } from 'vue'
 import { type Ref } from "vue";
 
 export async function useFetch(url: string, isLoading: Ref<boolean> = ref(true)) {
-  /*const isLoading = ref(true);*/
   let result:any = {};
   try {
     isLoading.value = true;

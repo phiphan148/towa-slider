@@ -2,18 +2,20 @@
 import { useFetch } from '../service/fetch'
 import { toggleSlider, updateIndicators } from '../static/js/slider'
 import Product from '../core/Product'
-import { onMounted } from "vue";
+import { onMounted, ref } from 'vue'
 
-defineOptions({
-  name: 'HeroSlider',
+const products = ref<Product[]>([])
+
+const fetchData = async () => {
+  const data = await useFetch('https://dummyjson.com/products')
+  products.value = data.products
+}
+
+onMounted(async () => {
+  await fetchData()
+  updateIndicators()
+  toggleSlider()
 })
-const data= await useFetch('https://dummyjson.com/products');
-const products: Product[] = data.products;
-
-onMounted(() => {
-  updateIndicators();
-  toggleSlider();
-});
 </script>
 
 <template>
