@@ -1,6 +1,6 @@
 import { flushPromises, mount } from '@vue/test-utils'
 import { describe, it, expect, vi } from 'vitest'
-import HeroSlider from '../../src/components/HeroSlider.vue'
+import HeroSlider from '../../src/component/HeroSlider.vue'
 import { useFetch } from '../../src/service/fetch'
 import { toggleSlider, updateIndicators } from '../../src/static/js/slider'
 

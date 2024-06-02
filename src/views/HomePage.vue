@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import HeroSlider from '../components/HeroSlider.vue'
+import HeroSlider from '../component/HeroSlider.vue'
+import { defineComponent } from 'vue'
+defineComponent({
+  name: 'HomePage'
+})
 </script>
 
 <template>
   <div class="HomePage">
-    <HeroSlider></HeroSlider>
+    <HeroSlider />
   </div>
 </template>
 

@@ -2,7 +2,11 @@
 import { useFetch } from '../service/fetch'
 import { toggleSlider, updateIndicators } from '../static/js/slider'
 import Product from '../core/Product'
-import { onMounted, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
+
+defineComponent({
+  name: 'HeroSlider'
+})
 
 const products = ref<Product[]>([])
 
