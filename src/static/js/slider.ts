@@ -11,8 +11,8 @@ function updateSlider(): void {
 }
 
 function moveToNextSlide() {
-  const heroSlider = document.querySelectorAll('.HeroSlider__Item');
-  if (currentSlide < heroSlider.length - 1) {
+  const heroSliderItems = document.querySelectorAll('.HeroSlider__Item');
+  if (currentSlide < heroSliderItems.length - 1) {
     currentSlide++;
   } else {
     currentSlide = 0;
@@ -21,11 +21,11 @@ function moveToNextSlide() {
 }
 
 function moveToPrevSlide() {
-  const heroSlider = document.querySelectorAll('.HeroSlider__Item');
+  const heroSliderItems = document.querySelectorAll('.HeroSlider__Item');
   if (currentSlide > 0) {
     currentSlide--;
   } else {
-    currentSlide = heroSlider.length - 1;
+    currentSlide = heroSliderItems.length - 1;
   }
   updateSlider();
 }
@@ -60,15 +60,15 @@ function clickToArrowAction(): void {
 
 function touchScreenAction() {
   window.addEventListener('resize', touchScreenAction);
-  const mq = window.matchMedia( "(max-width: 900px)" );
-  const heroSlider = document.querySelectorAll('.HeroSlider__Item');
+  const mq = window.matchMedia( "(max-width: 960px)" );
+  const heroSliderItems = document.querySelectorAll('.HeroSlider__Item');
   if (mq.matches) {
-    heroSlider.forEach((item: any) => {
+    heroSliderItems.forEach((item: any) => {
       item.addEventListener('touchstart',touchStart, true);
       item.addEventListener('touchend',touchEnd, true );
     });
   } else {
-    heroSlider.forEach((item: any) => {
+    heroSliderItems.forEach((item: any) => {
       item.removeEventListener('touchstart',touchStart, true);
       item.removeEventListener('touchend',touchEnd, true );
     });

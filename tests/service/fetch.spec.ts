@@ -29,8 +29,6 @@ describe('useFetch', () => {
     expect(global.fetch).toHaveBeenCalledWith(url);
     expect(consoleErrorSpy).toHaveBeenCalledWith('Catch error while fetching data from BE: ', expect.any(Error));
     expect(result).toEqual({});
-
-    consoleErrorSpy.mockRestore();
   });
 
   it('should update isLoading correctly', async () => {

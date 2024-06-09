@@ -1,34 +1,38 @@
 <script setup lang="ts">
-import { useFetch } from '../service/fetch'
+import { defineComponent, type PropType } from 'vue'
 import { toggleSlider, updateIndicators } from '../static/js/slider'
+import { onUpdated } from 'vue'
 import Product from '../core/Product'
-import { defineComponent, onMounted, ref } from 'vue'
 
 defineComponent({
   name: 'HeroSlider'
 })
 
-const products = ref<Product[]>([])
+defineProps({
+  products: {
+    type: Array as PropType<Product[]>,
+    default() {
+      return []
+    }
+  }
+})
 
-const fetchData = async () => {
-  const data = await useFetch('https://dummyjson.com/products')
-  products.value = data.products
-}
-
-onMounted(async () => {
-  await fetchData()
+onUpdated(async () => {
   updateIndicators()
   toggleSlider()
 })
+
 </script>
 
 <template>
   <div class="HeroSlider">
     <div class="HeroSlider__Content">
-      <div class="HeroSlider__Item"
-           :style="{'--heroImg': 'url(' + product.thumbnail + ')'}"
-           v-for="product in products"
-           :key="product.id">
+      <div
+        v-for="product in products"
+        :key="product.id"
+        class="HeroSlider__Item"
+        :style="{'--heroImg': 'url(' + product.thumbnail + ')'}"
+      >
         <h1>{{ product.title }}</h1>
         <p>{{ product.description }}</p>
         <div class="HeroSlider__Button">
@@ -39,11 +43,11 @@ onMounted(async () => {
     </div>
     <div class="HeroSlider__Control">
       <div class="HeroSlider__Indicator">
-        <span v-for="product in products"
-              :key="product.id"
-              class="HeroSlider__Bar"
-        >
-      </span>
+        <span
+          v-for="product in products"
+          :key="product.id"
+          class="HeroSlider__Bar"
+        />
       </div>
       <div class="HeroSlider__Arrow">
         <span class="HeroSlider__Arrow-previous">&#10094;</span>
@@ -54,11 +58,11 @@ onMounted(async () => {
 </template>
 
 <style lang="scss" scoped>
+$tablet-width: 600px;
+$desktop-width: 960px;
 $button-primary-color: #009494;
 $button-primary-hover-color: #006565;
 $bg-grey-color: #484848;
-$tablet-width: 600px;
-$desktop-width: 600px;
 
 .HeroSlider {
   position: relative;
@@ -106,7 +110,7 @@ $desktop-width: 600px;
   &__Button {
     display: flex;
     gap: 10px;
-    margin: 1rem;
+    margin: 1rem 0;
 
     &-primary, &-secondary {
       padding: 10px 20px;
@@ -158,6 +162,7 @@ $desktop-width: 600px;
     background-color: $bg-grey-color;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+
     &.active {
       background-color: white;
     }
@@ -181,6 +186,7 @@ $desktop-width: 600px;
     &-previous {
       padding-right: 0.5rem;
     }
+
     &-next {
       padding-left: 0.5rem;
     }
