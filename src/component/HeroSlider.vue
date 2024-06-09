@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineComponent, type PropType } from 'vue'
+import { defineComponent, type PropType, ref } from 'vue'
 import { toggleSlider, updateIndicators } from '../static/js/slider'
 import { onUpdated } from 'vue'
 import Product from '../core/Product'
@@ -7,6 +7,8 @@ import Product from '../core/Product'
 defineComponent({
   name: 'HeroSlider'
 })
+
+const hasUpdated = ref(false);
 
 defineProps({
   products: {
@@ -17,9 +19,12 @@ defineProps({
   }
 })
 
-onUpdated(async () => {
-  updateIndicators()
-  toggleSlider()
+onUpdated( () => {
+  if (!hasUpdated.value) {
+    updateIndicators();
+    toggleSlider();
+    hasUpdated.value = true;
+  }
 })
 
 </script>
